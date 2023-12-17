@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:46:41 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/17 17:46:22 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/17 20:57:43 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,18 @@ static int	set_map(t_game *game, char *res, int height, int width)
 	game->map->map = ft_split(res, '\n');
 	if (!game->map->map)
 		error("An error occured while creating map. (3)", game);
-	game->map->height = height * 100;
-	game->map->width = (width / (height - 1)) * 100;
+	game->map->height = height;
+	game->map->width = width;
 	free(res);
 	return (0);
 }
 
 static char	*append(t_game *game, char *res, char *line)
 {
-	char *new_res;
-	
+	char	*new_res;
+	char	*tmp;
+
+	line = ft_strtrim(line, " \t\r\n");
 	new_res = ft_strjoin(res, line);
 	if (!new_res)
 	{
@@ -51,8 +53,9 @@ static char	*append(t_game *game, char *res, char *line)
 		free(line);
 		error("An error occured while creating map. (1)", game);
 	}
+	tmp = new_res;
 	free(res);
-	return (new_res);
+	return (tmp);
 }
 
 int	create_map(t_game *game)
@@ -62,7 +65,6 @@ int	create_map(t_game *game)
 	int		height;
 	char	*res;
 	char	*line;
-	char	*tmp;
 
 	fd = open_file(game);
 	res = ft_strdup("");
@@ -78,6 +80,8 @@ int	create_map(t_game *game)
 		width += ft_strlen(line);
 		height++;
 		res = append(game, res, line);
+		for (int i = 0; res[i]; i++)
+			ft_printf("res[%d] : %c\n", i, res[i]);
 		free(line);
 	}
 	return (close(fd),

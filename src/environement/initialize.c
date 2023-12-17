@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 13:32:39 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/17 17:24:33 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/17 20:19:37 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	initialize_map(t_game *game, char **map_file)
 		error("An error occured while initializing map name", game);
 	game->map = map;
 	create_map(game);
-	// initialize_map_content(map, game);
+	check(game);
 }
 
 void	initialize(t_game *game, char **map_file)
@@ -75,7 +75,6 @@ void	initialize(t_game *game, char **map_file)
 	}
 	game->mlx = mlx;
 	initialize_map(game, map_file);
-	// initialize_image(game);
 	initialize_player(game);
 	open_window(game);
 	initialize_hooks(game);
