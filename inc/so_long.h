@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 09:58:51 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/16 14:04:03 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/17 17:22:29 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,19 @@
 #  define PLAYER_NAME "Popol"
 # endif
 
-# define ESCAPE 17
+# ifndef WIDTH
+#  define WIDTH 1000
+# endif
+
+# ifndef HEIGHT
+#  define HEIGHT 400
+# endif
+
+# define ESCAPE 0xff1b
+# define UP 0xff52
+# define DOWN 0xff54
+# define LEFT 0xff51
+# define RIGHT 0xff53
 
 typedef struct s_player {
 	int		x;
@@ -35,23 +47,23 @@ typedef struct s_player {
 	char	*name;
 }			t_player;
 
-typedef struct s_collectible {
-	int	x;
-	int	y;
-	int	amount;
-}			t_collectible;
-
-typedef struct s_exit {
-	int	x;
-	int	y;
-}			t_exit;
+typedef struct s_img {
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	void	*img;
+	char	*addr;
+}			t_img;
 
 typedef struct s_map {
 	int		width;
 	int		height;
 	int		collectibles_count;
 	int		exit_count;
+	char	*path;
 	char	*name;
+	char	**map;
+	t_img	img;
 }			t_map;
 
 typedef struct s_game {
@@ -64,8 +76,22 @@ typedef struct s_game {
 // Main
 
 void	error(char *msg, t_game *game);
-void	initialize(t_game *game);
+void	initialize(t_game *game, char **map_file);
 void	close_window(t_game *game);
 void	open_window(t_game *game);
+void	initialize_hooks(t_game *game);
+void	initialize_image(t_game *game);
+int		manage_keys(int key, t_game *game);
+
+// Moves
+
+void	up(t_player *player);
+void	down(t_player *player);
+void	left(t_player *player);
+void	right(t_player *player);
+
+// Map
+
+int	create_map(t_game *game);
 
 #endif

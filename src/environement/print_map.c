@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   print_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/16 13:28:19 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/17 17:06:37 by soelalou         ###   ########.fr       */
+/*   Created: 2023/12/17 11:27:31 by soelalou          #+#    #+#             */
+/*   Updated: 2023/12/17 17:06:44 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-// void	check(t_game *game)
-// {
-// 	// check_map(game);
-// 	// check_player(game);
-// 	// check_collectibles(game);
-// 	// check_exits(game);
-// }
-
-void	error(char *msg, t_game *game)
+void	initialize_image(t_game *game)
 {
-	ft_printf("Error: %s\n", msg);
-	if (game)
-		close_window(game);
-	exit(EXIT_FAILURE);
+	game->map->img.img = mlx_new_image(game->mlx, game->map->width * 10,
+			game->map->height * 10);
+	game->map->img.addr = mlx_get_data_addr(game->map->img.img,
+			&game->map->img.bits_per_pixel,
+			&game->map->img.line_length, &game->map->img.endian);
 }

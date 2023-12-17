@@ -6,7 +6,7 @@
 #    By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/02 19:46:45 by soelalou          #+#    #+#              #
-#    Updated: 2023/12/16 12:34:04 by soelalou         ###   ########.fr        #
+#    Updated: 2023/12/17 13:19:18 by soelalou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@
 NAME        = so_long
 LIBFT		= libft/libft.a
 CC          = cc
-CFLAGS      = -Wall -Wextra -Werror -Imlx -Iinc
+CFLAGS      = -Wall -Wextra -Imlx -Iinc -g3
 MLXFLAGS    = -Lmlx -lXext -lX11 -lmlx
 RM          = rm -rf
 
@@ -60,6 +60,7 @@ dependencies:
 clean:
 	@$(RM) $(OBJS_DIR)
 	@make clean -s -C libft
+	@make clean -s -C mlx
 	@echo "$(GREY)[Clean]$(END_COLOR) Objects have been deleted"
 
 fclean: clean
