@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 11:43:52 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/17 17:07:08 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/18 12:55:48 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	down(t_player *player)
 {
 	if (!player)
 		return ;
-	player->y += 10;
+	player->y++;
 	player->moves++;
-	ft_printf("Player moved down\n");
+	ft_printf("Moves: %d (Player moved down)\n", player->moves);
 }
