@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 13:32:39 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/17 20:19:37 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/18 10:47:07 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static void	initialize_map(t_game *game, char **map_file)
 	map->name = ft_strdup(ft_strrchr(map->path, '/') + 1);
 	if (!map->name)
 		error("An error occured while initializing map name", game);
+	map->map = NULL;
 	game->map = map;
 	create_map(game);
 	check(game);

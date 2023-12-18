@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 09:58:51 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/17 20:30:57 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/18 10:24:51 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,9 @@ void	right(t_player *player);
 
 int		create_map(t_game *game);
 void	check(t_game *game);
+
+// Utils
+
+char	**split(char *s, int width, int height);
 
 #endif

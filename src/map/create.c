@@ -6,11 +6,26 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:46:41 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/17 20:57:43 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/18 10:43:37 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+static void	error_map(char *msg, t_game *game)
+{
+	ft_printf("Error: %s\n", msg);
+	if (game)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+		free(game->map->path);
+		free(game->map->name);
+		free(game->map);
+		free(game);
+	}
+	exit(EXIT_FAILURE);
+}
 
 static int	open_file(t_game *game)
 {
@@ -18,44 +33,54 @@ static int	open_file(t_game *game)
 	int		ret;
 
 	if (!game->map->path)
-		error("Game map file path is NULL in open_file() function.", game);
+		error_map("Map file path is NULL in open_file() function.", game);
 	fd = open(game->map->path, O_RDONLY);
 	ret = access(game->map->path, R_OK);
 	if (fd < 0 || ret < 0)
 	{
 		close(fd);
-		error("Map file not found, or not readable.", game);
+		error_map("Map file not found, or not readable.", game);
 	}
 	return (fd);
 }
 
-static int	set_map(t_game *game, char *res, int height, int width)
+static void	set_map(t_game *game, char *res, int height)
 {
-	game->map->map = ft_split(res, '\n');
+	int	row;
+
+	row = ft_strlen(res) / height;
+	game->map->map = split(res, row, height);
 	if (!game->map->map)
-		error("An error occured while creating map. (3)", game);
+		error("An error occured while creating map. (4)", game);
+	game->map->width = ft_strlen(res);
 	game->map->height = height;
-	game->map->width = width;
 	free(res);
-	return (0);
 }
 
 static char	*append(t_game *game, char *res, char *line)
 {
 	char	*new_res;
-	char	*tmp;
+	char	*trimed_line;
 
-	line = ft_strtrim(line, " \t\r\n");
-	new_res = ft_strjoin(res, line);
+	trimed_line = ft_strtrim(line, " \t\r\n");
+	if (!trimed_line)
+	{
+		free(res);
+		free(line);
+		error_map("An error occured while creating map. (3)", game);
+	}
+	new_res = ft_strjoin(res, trimed_line);
 	if (!new_res)
 	{
 		free(res);
 		free(line);
-		error("An error occured while creating map. (1)", game);
+		free(trimed_line);
+		error_map("An error occured while creating map. (2)", game);
 	}
-	tmp = new_res;
 	free(res);
-	return (tmp);
+	free(line);
+	free(trimed_line);
+	return (new_res);
 }
 
 int	create_map(t_game *game)
@@ -69,21 +94,19 @@ int	create_map(t_game *game)
 	fd = open_file(game);
 	res = ft_strdup("");
 	if (!res)
-		error("An error occured while creating map. (1)", game);
+		error_map("An error occured while creating map. (1)", game);
 	height = 0;
 	width = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
+		if (!line && height == 0 && width == 0)
+			error_map("Map file is empty.", game);
 		if (!line)
 			break ;
 		width += ft_strlen(line);
 		height++;
 		res = append(game, res, line);
-		for (int i = 0; res[i]; i++)
-			ft_printf("res[%d] : %c\n", i, res[i]);
-		free(line);
 	}
-	return (close(fd),
-		set_map(game, res, height, width), 0);
+	return (close(fd), set_map(game, res, height), 0);
 }
