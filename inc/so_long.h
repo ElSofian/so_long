@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 09:58:51 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/18 13:44:19 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/18 14:24:35 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ typedef struct s_img
 	int endian;
 	void *img;
 	char *addr;
+	char *wall;
+	char *floor;
+	char *collect;
+	char *exit;
+	char *player;
 } t_img;
 
 typedef struct s_map
@@ -88,7 +93,7 @@ void 	initialize(t_game *game, char **map_file);
 void 	close_window(t_game *game);
 void 	open_window(t_game *game);
 int		manage_keys(int key, t_game *game);
-void	game_loop(t_game *game);
+int		game_loop(t_game *game);
 
 // Moves
 

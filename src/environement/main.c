@@ -6,17 +6,11 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 12:07:08 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/18 13:43:45 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/18 14:21:28 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	game_loop(t_game *game)
-{
-	print_map(game);
-	mlx_put_image_to_window(game->mlx, game->window, game->map->img.img, 0, 0);
-}
 
 int	main(int ac, char **av)
 {
