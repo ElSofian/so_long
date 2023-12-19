@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 09:58:51 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/18 14:24:35 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/19 12:51:02 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,11 @@
 #include "../mlx/mlx.h"
 
 #ifndef PLAYER_NAME
-#define PLAYER_NAME "Popol"
+# define PLAYER_NAME "Popol"
 #endif
 
-#ifndef WIDTH
-#define WIDTH 1000
-#endif
-
-#ifndef HEIGHT
-#define HEIGHT 400
+#ifndef SIZE
+# define SIZE 32
 #endif
 
 #define ESCAPE 0xff1b
@@ -42,13 +38,15 @@
 #define S 0x0073
 #define A 0x0061
 #define D 0x0064
+#define R 0x0072
 
 typedef struct s_player
 {
 	int x;
 	int y;
 	int moves;
-	int items;
+	int collectibles;
+	char direction;
 	char *name;
 } t_player;
 
@@ -59,19 +57,24 @@ typedef struct s_img
 	int endian;
 	void *img;
 	char *addr;
-	char *wall;
-	char *floor;
-	char *collect;
-	char *exit;
-	char *player;
+	void *wall;
+	void *floor;
+	void *collectible;
+	void *exit;
+	void *player_up;
+	void *player_down;
+	void *player_right;
+	void *player_left;
 } t_img;
 
 typedef struct s_map
 {
 	int width;
 	int height;
-	int collectibles_count;
-	int exit_count;
+	int	collectibles;
+	int	exit_pos[2];
+	int	player_pos[2];
+	int	**collectibles_pos;
 	char *path;
 	char *name;
 	char **map;
@@ -88,28 +91,32 @@ typedef struct s_game
 
 // Main
 
+void	error_map(char *msg, t_game *game);
 void 	error(char *msg, t_game *game);
 void 	initialize(t_game *game, char **map_file);
-void 	close_window(t_game *game);
+int 	close_window(t_game *game);
 void 	open_window(t_game *game);
 int		manage_keys(int key, t_game *game);
-int		game_loop(t_game *game);
 
 // Moves
 
-void	up(t_player *player);
-void	down(t_player *player);
-void	left(t_player *player);
-void	right(t_player *player);
+void	up(t_game *game);
+void	down(t_game *game);
+void	left(t_game *game);
+void	right(t_game *game);
 
 // Map
 
 int		create_map(t_game *game);
+int		render_elements(t_game *game);
+int		render_map(t_game *game);
 void	check(t_game *game);
-void	print_map(t_game *game);
+void	print_image(t_game *game, void *img, int x, int y);
 
 // Utils
 
+int		open_file(t_game *game);
+void 	initialize_player_animation(t_game *game, int size);
 char	**split(char *s, int width, int height);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 12:50:03 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/18 11:31:26 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/19 12:56:21 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ int	manage_keys(int key, t_game *game)
 	if (key == ESCAPE)
 		close_window(game);
 	else if (key == UP || key == W)
-		up(game->player);
+		up(game);
 	else if (key == DOWN || key == S)
-		down(game->player);
+		down(game);
 	else if (key == LEFT || key == A)
-		left(game->player);
+		left(game);
 	else if (key == RIGHT || key == D)
-		right(game->player);
+		right(game);
 	return (0);
 }

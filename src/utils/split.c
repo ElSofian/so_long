@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 08:11:28 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/18 10:46:22 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/19 09:28:49 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	**split(char *s, int width, int height)
 	i = 0;
 	while (i < height)
 	{
-		tab[i] = (char *)malloc(width + 1);
+		tab[i] = (char *)malloc(sizeof(char) * (width + 1));
 		if (!tab[i])
 			return (return_error(2, tab));
 		j = 0;

@@ -6,42 +6,54 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:46:41 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/18 12:21:49 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/19 12:52:15 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	error_map(char *msg, t_game *game)
+static void	add_collectible_pos(t_game *game, int x, int y)
 {
-	ft_printf("Error: %s\n", msg);
-	if (game)
-	{
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-		free(game->map->path);
-		free(game->map->name);
-		free(game->map);
-		free(game);
-	}
-	exit(EXIT_FAILURE);
+	int	i;
+
+	i = 0;
+	if (!game->map->collectibles_pos)
+		game->map->collectibles_pos = (int **)malloc(sizeof(int *) * ft_occ_tab(game->map->map, 'C'));
+	while (game->map->collectibles_pos[i])
+		i++;
+	game->map->collectibles_pos[i] = (int *)malloc(sizeof(int) * 2);
+	if (!game->map->collectibles_pos[i])
+		error_map("An error occured while allocating collectibles pos.", game);
+	game->map->collectibles_pos[i][0] = x;
+	game->map->collectibles_pos[i][1] = y;
+	ft_printf("x: %d, y: %d\n", game->map->collectibles_pos[i][0], game->map->collectibles_pos[i][1]);
 }
 
-static int	open_file(t_game *game)
+static void	set_pos(t_game *game)
 {
-	int		fd;
-	int		ret;
+	int	x;
+	int	y;
 
-	if (!game->map->path)
-		error_map("Map file path is NULL in open_file() function.", game);
-	fd = open(game->map->path, O_RDONLY);
-	ret = access(game->map->path, R_OK);
-	if (fd < 0 || ret < 0)
+	y = -1;
+	while (++y < game->map->height)
 	{
-		close(fd);
-		error_map("Map file not found, or not readable.", game);
+		x = -1;
+		while (++x < (game->map->width / game->map->height))
+		{
+			if (game->map->map[y][x] == 'P')
+			{
+				game->map->player_pos[0] = x;
+				game->map->player_pos[1] = y;
+			}
+			else if (game->map->map[y][x] == 'E')
+			{
+				game->map->exit_pos[0] = x;
+				game->map->exit_pos[1] = y;
+			}
+			else if (game->map->map[y][x] == 'C')
+				add_collectible_pos(game, x, y);
+		}
 	}
-	return (fd);
 }
 
 static void	set_map(t_game *game, char *res, int height)
@@ -54,6 +66,8 @@ static void	set_map(t_game *game, char *res, int height)
 		error("An error occured while creating map. (4)", game);
 	game->map->width = ft_strlen(res);
 	game->map->height = height;
+	game->map->collectibles = ft_occ_tab(game->map->map, 'C');
+	set_pos(game);
 	free(res);
 }
 

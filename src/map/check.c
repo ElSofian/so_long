@@ -6,27 +6,11 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 17:50:04 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/18 11:24:03 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/19 12:03:27 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-static void	error_map(char *msg, t_game *game)
-{
-	ft_printf("Error: %s\n", msg);
-	if (game)
-	{
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-		free(game->map->path);
-		free(game->map->name);
-		ft_freetab(game->map->map);
-		free(game->map);
-		free(game);
-	}
-	exit(EXIT_FAILURE);
-}
 
 static void	check_char(t_game *game, char c)
 {
@@ -46,24 +30,15 @@ static void	check_wall(t_game *game, char c, int i, int j)
 		error_map("Right wall of the map contains a hole.", game);
 }
 
-static void	check_over_and_missing(t_game *game, char **map)
+static void	check_over_and_missing(t_game *game)
 {
-	int	p_count;
-	int	c_count;
-	int	e_count;
-	int	o_count;
-
-	p_count = ft_occ_tab(map, 'P');
-	c_count = ft_occ_tab(map, 'C');
-	e_count = ft_occ_tab(map, 'E');
-	o_count = ft_occ_tab(map, '0');
-	if (p_count != 1)
+	if (ft_occ_tab(game->map->map, 'P') != 1)
 		error_map("Map doesn't contains or too much player spawn.", game);
-	else if (c_count < 1)
+	else if (ft_occ_tab(game->map->map, 'C') < 1)
 		error_map("Map doesn't contains collectible.", game);
-	else if (e_count != 1)
+	else if (ft_occ_tab(game->map->map, 'E') != 1)
 		error_map("Map doesn't contains or contains too much no exit.", game);
-	else if (o_count < 1)
+	else if (ft_occ_tab(game->map->map, '0') < 1)
 		error_map("Map doesn't contains empty space.", game);
 }
 
@@ -91,5 +66,5 @@ void	check(t_game *game)
 	}
 	if (count != game->map->width)
 		error_map("Map is not a rectangle.", game);
-	check_over_and_missing(game, game->map->map);
+	check_over_and_missing(game);
 }

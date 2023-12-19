@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game_loop.c                                        :+:      :+:    :+:   */
+/*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/18 14:21:36 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/18 14:21:41 by soelalou         ###   ########.fr       */
+/*   Created: 2023/12/19 09:54:40 by soelalou          #+#    #+#             */
+/*   Updated: 2023/12/19 12:03:30 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	game_loop(t_game *game)
+int	open_file(t_game *game)
 {
-	print_map(game);
-	mlx_put_image_to_window(game->mlx, game->window, game->map->img.img, 0, 0);
-	return (0);
+	int		fd;
+	int		ret;
+
+	if (!game->map->path)
+		error_map("Map file path is NULL in open_file() function.", game);
+	fd = open(game->map->path, O_RDONLY);
+	ret = access(game->map->path, R_OK);
+	if (fd < 0 || ret < 0)
+	{
+		close(fd);
+		error_map("Map file not found, or not readable.", game);
+	}
+	return (fd);
 }
