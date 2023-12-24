@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 09:58:51 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 11:44:28 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 11:57:39 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_img
 	void *player_left;
 	void *player_right;
 	void *player;
+	void *pause;
 } t_img;
 
 typedef struct s_map
@@ -111,6 +112,9 @@ void	right(t_game *game);
 // Map
 
 int		create_map(t_game *game);
+void	render_image(t_game *game, void *img, int x, int y);
+void	render_moves(t_game *game);
+void	render_player(t_game *game, int x, int y);
 int		render_elements(t_game *game, int x, int y);
 int		render_map(t_game *game);
 void	check(t_game *game);
@@ -121,6 +125,7 @@ int		open_file(t_game *game);
 void	free_int_tab(t_game *game, int **tab);
 void	free_images(t_game *game);
 void	initialize_player_animations(t_game *game);
+void	pause_game(t_game *game);
 char	**split(char *s, int width, int height);
 
 #endif

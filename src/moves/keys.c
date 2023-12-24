@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 12:50:03 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 11:44:55 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 11:56:56 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,7 @@ int	manage_keys(int key, t_game *game)
 	if (key == ESCAPE)
 		close_window(game);
 	else if (key == SPACE)
-	{
-		if (game->paused == false)
-			game->paused = true;
-		else
-			game->paused = false;
-	}
+		pause_game(game);
 	else if (key == UP || key == W)
 		up(game);
 	else if (key == DOWN || key == S)

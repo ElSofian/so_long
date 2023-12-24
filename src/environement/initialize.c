@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 13:32:39 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 11:40:05 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 12:29:52 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ static int	initialize_image(t_game *game)
 			"./assets/sprites/Other/Pacdots/pacdot_food.xpm", &size, &size);
 	game->map->img.exit = mlx_xpm_file_to_image(game->mlx,
 			"./assets/sprites/Other/Portal/portal.xpm", &size, &size);
+	game->map->img.pause = mlx_xpm_file_to_image(game->mlx,
+			"./assets/sprites/Other/Logo/logo.xpm", &size, &size);
 	initialize_player_animations(game);
 	return (0);
 }
