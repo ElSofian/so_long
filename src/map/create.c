@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:46:41 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/19 12:52:15 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 09:41:54 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,26 @@ static void	add_collectible_pos(t_game *game, int x, int y)
 	int	i;
 
 	i = 0;
+	game->map->collectibles_pos = (int **)malloc(sizeof(int *)
+			* ft_occ_tab(game->map->map, 'C'));
 	if (!game->map->collectibles_pos)
-		game->map->collectibles_pos = (int **)malloc(sizeof(int *) * ft_occ_tab(game->map->map, 'C'));
-	while (game->map->collectibles_pos[i])
-		i++;
-	game->map->collectibles_pos[i] = (int *)malloc(sizeof(int) * 2);
-	if (!game->map->collectibles_pos[i])
-		error_map("An error occured while allocating collectibles pos.", game);
-	game->map->collectibles_pos[i][0] = x;
-	game->map->collectibles_pos[i][1] = y;
-	ft_printf("x: %d, y: %d\n", game->map->collectibles_pos[i][0], game->map->collectibles_pos[i][1]);
+		error("An error occured while creating map. (5)", game);
+	while (y-- > 0)
+	{
+		x = game->map->width / game->map->height;
+		while (x-- > 0)
+		{
+			if (game->map->map[y][x] == 'C')
+			{
+				game->map->collectibles_pos[i] = (int *)malloc(sizeof(int) * 3);
+				if (!game->map->collectibles_pos[i])
+					error("An error occured while creating map. (6)", game);
+				game->map->collectibles_pos[i][0] = x;
+				game->map->collectibles_pos[i][1] = y;
+				i++;
+			}
+		}
+	}
 }
 
 static void	set_pos(t_game *game)
@@ -50,10 +60,9 @@ static void	set_pos(t_game *game)
 				game->map->exit_pos[0] = x;
 				game->map->exit_pos[1] = y;
 			}
-			else if (game->map->map[y][x] == 'C')
-				add_collectible_pos(game, x, y);
 		}
 	}
+	add_collectible_pos(game, x, y);
 }
 
 static void	set_map(t_game *game, char *res, int height)

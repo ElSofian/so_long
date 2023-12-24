@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 09:58:51 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/19 12:51:02 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 09:39:48 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	print_image(t_game *game, void *img, int x, int y);
 
 int		open_file(t_game *game);
 void 	initialize_player_animation(t_game *game, int size);
+void	free_int_tab(t_game *game, int **tab);
 char	**split(char *s, int width, int height);
 
 #endif

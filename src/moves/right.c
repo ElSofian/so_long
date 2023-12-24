@@ -6,46 +6,43 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 11:44:10 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/19 14:29:01 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 08:38:17 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	move(t_game *game, int x, int y)
+static void	move(t_game *game)
 {
 	char	tmp;
-	
-	if (game->map->map[game->player->y][game->player->x + 1] == '0')
+
+	if (game->map->map[game->player->y][game->player->x + 1] == 'E'
+		&& game->player->collectibles == game->map->collectibles)
 	{
-		tmp = game->map->map[game->player->y][game->player->x];
-		game->map->map[game->player->y][game->player->x + 1] = 'P';
-		game->map->map[game->player->y][game->player->x - 1] = tmp;
-	} else if (game->map->map[game->player->y][game->player->x + 1] == 'C')
-	{
-		tmp = game->map->map[game->player->y][game->player->x];
-		game->map->map[game->player->y][game->player->x + 1] = 'P';
-		game->map->map[game->player->y][game->player->x - 1] = tmp;
-		game->player->collectibles++;
-	} else if (game->map->map[game->player->y][game->player->x + 1] == 'E')
-	{
-		tmp = game->map->map[game->player->y][game->player->x];
-		game->map->map[game->player->y][game->player->x + 1] = 'P';
-		game->map->map[game->player->y][game->player->x - 1] = tmp;
+		game->player->moves++;
+		ft_printf("You won in %d moves !\n", game->player->moves);
+		close_window(game);
 	}
+	if (game->map->map[game->player->y][game->player->x + 1] == 'C')
+	{
+		tmp = '0';
+		game->player->collectibles++;
+	}
+	else
+		tmp = game->map->map[game->player->y][game->player->x + 1];
+	game->map->map[game->player->y][game->player->x + 1] = 'P';
+	game->map->map[game->player->y][game->player->x] = tmp;
+	game->player->x++;
+	mlx_put_image_to_window(game->mlx, game->window, game->map->img.img, 0, 0);
 }
 
 void	right(t_game *game)
 {
-	char	tmp;
-
 	if (!game->player
 		|| !game->map->map[game->player->y][game->player->x + 1]
 		|| game->map->map[game->player->y][game->player->x + 1] == '1')
 		return ;
 	game->player->moves++;
 	game->player->direction = 'R';
-	game->player->x++;
-	move(game, game->player->x, game->player->y);
-	ft_printf("Moves: %d (Player moved right)   |   Pos : %d / %d\n", game->player->moves, game->player->x, game->player->y);
+	move(game);
 }

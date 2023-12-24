@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 13:32:39 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/19 12:53:49 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 08:36:08 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	initialize_player(t_game *game)
 	game->player = player;
 }
 
-static void	initialize_image(t_game *game)
+static int	initialize_image(t_game *game)
 {
 	int	size;
 
@@ -57,6 +57,7 @@ static void	initialize_image(t_game *game)
 	initialize_player_animation(game, size);
 	render_map(game);
 	mlx_put_image_to_window(game->mlx, game->window, game->map->img.img, 0, 0);
+	return (0);
 }
 
 static void	initialize_map(t_game *game, char **map_file)
@@ -76,8 +77,6 @@ static void	initialize_map(t_game *game, char **map_file)
 	game->map = map;
 	create_map(game);
 	check(game);
-	for (int i = 0; i < game->map->height; i++)
-		ft_printf("%s\n", game->map->map[i]);
 }
 
 static void	initialize_loops(t_game *game)
