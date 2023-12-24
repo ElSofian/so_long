@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 11:43:52 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 08:38:30 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 11:25:35 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,15 @@ static void	move(t_game *game)
 	{
 		tmp = '0';
 		game->player->collectibles++;
+		if (game->player->collectibles == game->map->collectibles)
+			game->map->map[game->map->exit_pos[1]][game->map->exit_pos[0]]
+				= 'E';
 	}
 	else
 		tmp = game->map->map[game->player->y + 1][game->player->x];
 	game->map->map[game->player->y + 1][game->player->x] = 'P';
 	game->map->map[game->player->y][game->player->x] = tmp;
 	game->player->y++;
-	mlx_put_image_to_window(game->mlx, game->window, game->map->img.img, 0, 0);
 }
 
 void	down(t_game *game)

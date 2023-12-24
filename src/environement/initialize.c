@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 13:32:39 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 10:28:30 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 11:25:52 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ static int	initialize_image(t_game *game)
 	game->map->img.exit = mlx_xpm_file_to_image(game->mlx,
 			"./assets/sprites/Other/Portal/portal.xpm", &size, &size);
 	initialize_player_animations(game);
-	render_map(game);
-	mlx_put_image_to_window(game->mlx, game->window, game->map->img.img, 0, 0);
 	return (0);
 }
 
@@ -80,12 +78,11 @@ static void	initialize_map(t_game *game, char **map_file)
 	check(game);
 }
 
-static void	initialize_loops(t_game *game)
+static void	initialize_hooks(t_game *game)
 {
-	mlx_loop_hook(game->mlx, render_map, game);
 	mlx_hook(game->window, 17, 0, close_window, game);
-	mlx_key_hook(game->window, manage_keys, game);
-	mlx_loop(game->mlx);
+	mlx_hook(game->window, 2, 1L << 0, manage_keys, game);
+	render_map(game);
 }
 
 void	initialize(t_game *game, char **map_file)
@@ -106,5 +103,6 @@ void	initialize(t_game *game, char **map_file)
 	initialize_player(game);
 	open_window(game);
 	initialize_image(game);
-	initialize_loops(game);
+	initialize_hooks(game);
+	mlx_loop(game->mlx);
 }

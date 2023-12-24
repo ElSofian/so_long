@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 15:46:41 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 09:41:54 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 11:21:07 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static void	set_pos(t_game *game)
 			}
 			else if (game->map->map[y][x] == 'E')
 			{
+				game->map->map[y][x] = '0';
 				game->map->exit_pos[0] = x;
 				game->map->exit_pos[1] = y;
 			}

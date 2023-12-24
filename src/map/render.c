@@ -6,11 +6,16 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:57:02 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 10:28:12 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 11:18:27 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	render_image(t_game *game, void *img, int x, int y)
+{
+	mlx_put_image_to_window(game->mlx, game->window, img, x, y);
+}
 
 void	render_player(t_game *game, int x, int y)
 {
@@ -18,47 +23,30 @@ void	render_player(t_game *game, int x, int y)
 
 	size = SIZE;
 	if (game->player->direction == 'N')
-		mlx_put_image_to_window(game->mlx, game->window,
-			game->map->img.player, x, y);
+		render_image(game, game->map->img.player, x, y);
 	else if (game->player->direction == 'R')
-		mlx_put_image_to_window(game->mlx, game->window,
-			game->map->img.player_right, x, y);
+		render_image(game, game->map->img.player_right, x, y);
 	else if (game->player->direction == 'L')
-		mlx_put_image_to_window(game->mlx, game->window,
-			game->map->img.player_left, x, y);
+		render_image(game, game->map->img.player_left, x, y);
 	else if (game->player->direction == 'U')
-		mlx_put_image_to_window(game->mlx, game->window,
-			game->map->img.player_up, x, y);
+		render_image(game, game->map->img.player_up, x, y);
 	else if (game->player->direction == 'D')
-		mlx_put_image_to_window(game->mlx, game->window,
-			game->map->img.player_down, x, y);
+		render_image(game, game->map->img.player_down, x, y);
 }
 
-int	render_elements(t_game *game)
+int	render_elements(t_game *game, int x, int y)
 {
-	int	x;
-	int	y;
-
-	y = -1;
-	while (++y < game->map->height)
-	{
-		x = -1;
-		while (++x < (game->map->width / game->map->height))
-		{
-			if (game->map->map[y][x] == '1')
-				mlx_put_image_to_window(game->mlx, game->window,
-					game->map->img.wall, x * SIZE, y * SIZE);
-			if (game->map->map[y][x] == 'E'
-				&& game->player->collectibles == game->map->collectibles)
-				mlx_put_image_to_window(game->mlx, game->window,
-					game->map->img.exit, x * SIZE, y * SIZE);
-			if (game->map->map[y][x] == 'C')
-				mlx_put_image_to_window(game->mlx, game->window,
-					game->map->img.collectible, x * SIZE, y * SIZE);
-			if (game->map->map[y][x] == 'P')
-				render_player(game, x * SIZE, y * SIZE);
-		}
-	}
+	if (game->map->map[y][x] == '0' || game->map->map[y][x] == 'H')
+		render_image(game, game->map->img.floor, x * SIZE, y * SIZE);
+	if (game->map->map[y][x] == '1')
+		render_image(game, game->map->img.wall, x * SIZE, y * SIZE);
+	if (game->map->map[y][x] == 'E'
+		&& game->player->collectibles == game->map->collectibles)
+		render_image(game, game->map->img.exit, x * SIZE, y * SIZE);
+	if (game->map->map[y][x] == 'C')
+		render_image(game, game->map->img.collectible, x * SIZE, y * SIZE);
+	if (game->map->map[y][x] == 'P')
+		render_player(game, x * SIZE, y * SIZE);
 	return (0);
 }
 
@@ -71,9 +59,9 @@ int	render_map(t_game *game)
 	while (y < game->map->height)
 	{
 		x = 0;
-		while (x < game->map->width)
+		while (x < (game->map->width / game->map->height))
 		{
-			render_elements(game);
+			render_elements(game, x, y);
 			x++;
 		}
 		y++;

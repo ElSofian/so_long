@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 12:50:03 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/19 12:56:21 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 11:02:52 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int	manage_keys(int key, t_game *game)
 		left(game);
 	else if (key == RIGHT || key == D)
 		right(game);
+	render_map(game);
 	return (0);
 }

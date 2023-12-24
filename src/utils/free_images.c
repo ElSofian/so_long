@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 09:45:17 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 10:27:12 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 11:25:57 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	free_images(t_game *game)
 	mlx_destroy_image(game->mlx, game->map->img.floor);
 	mlx_destroy_image(game->mlx, game->map->img.collectible);
 	mlx_destroy_image(game->mlx, game->map->img.exit);
+	mlx_destroy_image(game->mlx, game->map->img.player);
 	mlx_destroy_image(game->mlx, game->map->img.player_right);
 	mlx_destroy_image(game->mlx, game->map->img.player_left);
 	mlx_destroy_image(game->mlx, game->map->img.player_up);

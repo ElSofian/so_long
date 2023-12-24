@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 09:58:51 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 10:29:56 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 11:04:03 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	right(t_game *game);
 // Map
 
 int		create_map(t_game *game);
-int		render_elements(t_game *game);
+int		render_elements(t_game *game, int x, int y);
 int		render_map(t_game *game);
 void	check(t_game *game);
 void	print_image(t_game *game, void *img, int x, int y);
