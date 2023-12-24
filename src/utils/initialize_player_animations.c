@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialize_player_animation.c                      :+:      :+:    :+:   */
+/*   initialize_player_animations.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/19 09:57:03 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/19 10:00:18 by soelalou         ###   ########.fr       */
+/*   Created: 2023/12/24 10:28:35 by soelalou          #+#    #+#             */
+/*   Updated: 2023/12/24 10:29:50 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	initialize_player_animation(t_game *game, int size)
+void	initialize_player_animations(t_game *game)
 {
+	int	size;
+
+	size = SIZE;
+	game->map->img.player = mlx_xpm_file_to_image(game->mlx,
+			"./assets/sprites/Pac-Man/pac_closed.xpm",
+			&size, &size);
 	game->map->img.player_up = mlx_xpm_file_to_image(game->mlx,
 			"./assets/sprites/Pac-Man/pac_open_up.xpm",
 			&size, &size);

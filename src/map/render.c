@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:57:02 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 08:24:29 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 10:28:12 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 void	render_player(t_game *game, int x, int y)
 {
-	if (game->player->direction == 'R')
+	int	size;
+
+	size = SIZE;
+	if (game->player->direction == 'N')
+		mlx_put_image_to_window(game->mlx, game->window,
+			game->map->img.player, x, y);
+	else if (game->player->direction == 'R')
 		mlx_put_image_to_window(game->mlx, game->window,
 			game->map->img.player_right, x, y);
 	else if (game->player->direction == 'L')
@@ -50,8 +56,7 @@ int	render_elements(t_game *game)
 				mlx_put_image_to_window(game->mlx, game->window,
 					game->map->img.collectible, x * SIZE, y * SIZE);
 			if (game->map->map[y][x] == 'P')
-				mlx_put_image_to_window(game->mlx, game->window,
-					game->map->img.player_right, x * SIZE, y * SIZE);
+				render_player(game, x * SIZE, y * SIZE);
 		}
 	}
 	return (0);

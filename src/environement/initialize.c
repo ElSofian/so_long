@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 13:32:39 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 08:36:08 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 10:28:30 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	initialize_player(t_game *game)
 	player->y = game->map->player_pos[1];
 	player->moves = 0;
 	player->collectibles = 0;
+	player->direction = 'N';
 	player->name = ft_strdup(PLAYER_NAME);
 	if (!player->name)
 	{
@@ -54,7 +55,7 @@ static int	initialize_image(t_game *game)
 			"./assets/sprites/Other/Pacdots/pacdot_food.xpm", &size, &size);
 	game->map->img.exit = mlx_xpm_file_to_image(game->mlx,
 			"./assets/sprites/Other/Portal/portal.xpm", &size, &size);
-	initialize_player_animation(game, size);
+	initialize_player_animations(game);
 	render_map(game);
 	mlx_put_image_to_window(game->mlx, game->window, game->map->img.img, 0, 0);
 	return (0);
