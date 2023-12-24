@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 11:44:03 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 11:25:40 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 11:45:25 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static void	move(t_game *game)
 
 void	left(t_game *game)
 {
-	if (!game->player
+	if (game->paused
+		|| !game->player
 		|| !game->map->map[game->player->y][game->player->x - 1]
 		|| game->map->map[game->player->y][game->player->x - 1] == '1')
 		return ;

@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 13:32:39 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 11:25:52 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 11:40:05 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	initialize(t_game *game, char **map_file)
 		error("An error occured while initializing mlx", NULL);
 	}
 	game->mlx = mlx;
+	game->paused = false;
 	initialize_map(game, map_file);
 	initialize_player(game);
 	open_window(game);

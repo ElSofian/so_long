@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:57:02 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 11:18:27 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 11:43:44 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,25 @@
 void	render_image(t_game *game, void *img, int x, int y)
 {
 	mlx_put_image_to_window(game->mlx, game->window, img, x, y);
+}
+
+void	render_moves(t_game *game)
+{
+	char	*moves;
+	char	*render;
+
+	moves = ft_itoa(game->player->moves);
+	if (!moves)
+		error("An error occured while rendering the moves.", game);
+	render = ft_strjoin("Movements : ", moves);
+	if (!render)
+	{
+		free(moves);
+		error("An error occured while rendering the moves. (2)", game);
+	}
+	mlx_string_put(game->mlx, game->window, 10, 20, 16777215, render);
+	free(moves);
+	free(render);
 }
 
 void	render_player(t_game *game, int x, int y)
@@ -56,6 +75,8 @@ int	render_map(t_game *game)
 	int	y;
 
 	y = 0;
+	if (game->paused)
+		return (0);
 	while (y < game->map->height)
 	{
 		x = 0;
@@ -66,5 +87,6 @@ int	render_map(t_game *game)
 		}
 		y++;
 	}
+	render_moves(game);
 	return (0);
 }
