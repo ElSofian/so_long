@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 17:50:04 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 11:22:33 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/30 10:17:00 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static void	check_char(t_game *game, char c)
 {
-	if (c != 'P' && c != 'C' && c != 'E' && c != '1' && c != '0' && c != 13)
+	if (c != 'P' && c != 'C' && c != 'E' && c != 'G'
+		&& c != '1' && c != '0' && c != 13)
 		error_map("Map contains non authorized characters/digits.", game);
 }
 
@@ -36,7 +37,7 @@ static void	check_over_and_missing(t_game *game)
 		error_map("Map doesn't contains or too much player spawn.", game);
 	else if (ft_occ_tab(game->map->map, 'C') < 1)
 		error_map("Map doesn't contains collectible.", game);
-	else if (!game->map->exit_pos[0] || !game->map->exit_pos[1])
+	else if (!game->map->exit[0] || !game->map->exit[1])
 		error_map("Map doesn't contains or contains too much no exit.", game);
 	else if (ft_occ_tab(game->map->map, '0') < 1)
 		error_map("Map doesn't contains empty space.", game);

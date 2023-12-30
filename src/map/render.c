@@ -6,16 +6,11 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:57:02 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 11:43:44 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/30 13:31:07 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-void	render_image(t_game *game, void *img, int x, int y)
-{
-	mlx_put_image_to_window(game->mlx, game->window, img, x, y);
-}
 
 void	render_moves(t_game *game)
 {
@@ -34,6 +29,23 @@ void	render_moves(t_game *game)
 	mlx_string_put(game->mlx, game->window, 10, 20, 16777215, render);
 	free(moves);
 	free(render);
+}
+
+void	render_ghost(t_game *game, int x, int y)
+{
+	int	size;
+
+	size = SIZE;
+	if (game->ghost->direction == 'N')
+		render_image(game, game->map->img.ghost, x, y);
+	else if (game->ghost->direction == 'R')
+		render_image(game, game->map->img.ghost_right, x, y);
+	else if (game->ghost->direction == 'L')
+		render_image(game, game->map->img.ghost_left, x, y);
+	else if (game->ghost->direction == 'U')
+		render_image(game, game->map->img.ghost_up, x, y);
+	else if (game->ghost->direction == 'D')
+		render_image(game, game->map->img.ghost_down, x, y);
 }
 
 void	render_player(t_game *game, int x, int y)
@@ -55,7 +67,10 @@ void	render_player(t_game *game, int x, int y)
 
 int	render_elements(t_game *game, int x, int y)
 {
-	if (game->map->map[y][x] == '0' || game->map->map[y][x] == 'H')
+	int	i;
+
+	i = 0;
+	if (game->map->map[y][x] == '0')
 		render_image(game, game->map->img.floor, x * SIZE, y * SIZE);
 	if (game->map->map[y][x] == '1')
 		render_image(game, game->map->img.wall, x * SIZE, y * SIZE);
@@ -66,6 +81,8 @@ int	render_elements(t_game *game, int x, int y)
 		render_image(game, game->map->img.collectible, x * SIZE, y * SIZE);
 	if (game->map->map[y][x] == 'P')
 		render_player(game, x * SIZE, y * SIZE);
+	if (game->map->map[y][x] == 'G')
+		render_ghost(game, x * SIZE, y * SIZE);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 12:49:13 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 12:12:13 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/30 08:17:05 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,11 @@
 
 int	close_window(t_game *game)
 {
-	mlx_destroy_image(game->mlx, game->map->img.wall);
-	mlx_destroy_image(game->mlx, game->map->img.floor);
-	mlx_destroy_image(game->mlx, game->map->img.collectible);
-	mlx_destroy_image(game->mlx, game->map->img.exit);
-	mlx_destroy_image(game->mlx, game->map->img.player_up);
-	mlx_destroy_image(game->mlx, game->map->img.player_down);
-	mlx_destroy_image(game->mlx, game->map->img.player_right);
-	mlx_destroy_image(game->mlx, game->map->img.player_left);
-	mlx_destroy_image(game->mlx, game->map->img.player);
-	mlx_destroy_image(game->mlx, game->map->img.pause);
-	mlx_destroy_image(game->mlx, game->map->img.img);
+	free_images(game);
 	mlx_destroy_window(game->mlx, game->window);
 	mlx_destroy_display(game->mlx);
 	free(game->mlx);
+	free_ghosts(game);
 	free(game->player->name);
 	free(game->player);
 	free(game->map->path);

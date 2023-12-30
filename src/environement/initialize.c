@@ -6,11 +6,39 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 13:32:39 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 12:29:52 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/30 12:56:40 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+static void	initialize_ghosts(t_game *game)
+{
+	int		x;
+	int		y;
+	t_ghost	*ghost;
+
+	game->ghost = NULL;
+	y = -1;
+	while (++y < game->map->height)
+	{
+		x = -1;
+		while (++x < (game->map->width / game->map->height))
+		{
+			if (game->map->map[y][x] != 'G')
+				continue ;
+			ghost = (t_ghost *)malloc(sizeof(t_ghost));
+			if (!ghost)
+				return (error("An error while initializing ghosts.", game));
+			ghost->x = x;
+			ghost->y = y;
+			ghost->moves = 0;
+			ghost->direction = 'R';
+			ghost->next = NULL;
+			lstadd_back(&game->ghost, ghost);
+		}
+	}
+}
 
 static void	initialize_player(t_game *game)
 {
@@ -22,8 +50,8 @@ static void	initialize_player(t_game *game)
 		error("An error occured while initializing player", game);
 		return ;
 	}
-	player->x = game->map->player_pos[0];
-	player->y = game->map->player_pos[1];
+	player->x = game->map->player[0];
+	player->y = game->map->player[1];
 	player->moves = 0;
 	player->collectibles = 0;
 	player->direction = 'N';
@@ -57,7 +85,8 @@ static int	initialize_image(t_game *game)
 			"./assets/sprites/Other/Portal/portal.xpm", &size, &size);
 	game->map->img.pause = mlx_xpm_file_to_image(game->mlx,
 			"./assets/sprites/Other/Logo/logo.xpm", &size, &size);
-	initialize_player_animations(game);
+	initialize_player_anims(game);
+	initialize_ghost_anims(game);
 	return (0);
 }
 
@@ -80,13 +109,6 @@ static void	initialize_map(t_game *game, char **map_file)
 	check(game);
 }
 
-static void	initialize_hooks(t_game *game)
-{
-	mlx_hook(game->window, 17, 0, close_window, game);
-	mlx_hook(game->window, 2, 1L << 0, manage_keys, game);
-	render_map(game);
-}
-
 void	initialize(t_game *game, char **map_file)
 {
 	void	*mlx;
@@ -103,9 +125,13 @@ void	initialize(t_game *game, char **map_file)
 	game->mlx = mlx;
 	game->paused = false;
 	initialize_map(game, map_file);
+	initialize_ghosts(game);
 	initialize_player(game);
 	open_window(game);
 	initialize_image(game);
-	initialize_hooks(game);
+	mlx_hook(game->window, 17, 0, close_window, game);
+	mlx_hook(game->window, 2, 1L << 0, manage_keys, game);
+	render_map(game);
+	mlx_loop_hook(game->mlx, ghosts, game);
 	mlx_loop(game->mlx);
 }

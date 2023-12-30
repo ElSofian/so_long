@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.c                                             :+:      :+:    :+:   */
+/*   lstadd_back.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/16 12:50:03 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/24 13:43:04 by soelalou         ###   ########.fr       */
+/*   Created: 2023/12/24 14:19:06 by soelalou          #+#    #+#             */
+/*   Updated: 2023/12/30 08:07:57 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	manage_keys(int key, t_game *game)
+void	lstadd_back(t_ghost **lst, t_ghost *new_lst)
 {
-	if (key == ESCAPE)
-		close_window(game);
-	else if (key == SPACE)
-		pause_game(game);
-	else if (key == UP || key == W)
-		up(game);
-	else if (key == DOWN || key == S)
-		down(game);
-	else if (key == LEFT || key == A)
-		left(game);
-	else if (key == RIGHT || key == D)
-		right(game);
-	render_map(game);
-	return (0);
+	t_ghost	*tmp;
+
+	if (!lst || !new_lst)
+	{
+		if (!lst)
+			ft_printf("Argument lst is NULL in ft_lstadd_back() function.\n");
+		if (!new_lst)
+			ft_printf("Argument new_lst is NULL in lstadd_back() function.\n");
+		return ;
+	}
+	tmp = NULL;
+	tmp = lstlast(*lst);
+	if (!tmp)
+		*lst = new_lst;
+	else
+		tmp->next = new_lst;
 }

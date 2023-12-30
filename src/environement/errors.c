@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 13:28:19 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/19 12:03:00 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/24 13:53:32 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	error_map(char *msg, t_game *game)
 		free(game->mlx);
 		free(game->map->path);
 		free(game->map->name);
+		free_int_tab(game, game->map->collectibles_pos);
+		ft_freetab(game->map->map);
 		free(game->map);
 		free(game);
 	}
