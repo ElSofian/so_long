@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 11:57:02 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/30 13:31:07 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/30 14:04:28 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,6 @@ void	render_ghost(t_game *game, int x, int y)
 		render_image(game, game->map->img.ghost_right, x, y);
 	else if (game->ghost->direction == 'L')
 		render_image(game, game->map->img.ghost_left, x, y);
-	else if (game->ghost->direction == 'U')
-		render_image(game, game->map->img.ghost_up, x, y);
-	else if (game->ghost->direction == 'D')
-		render_image(game, game->map->img.ghost_down, x, y);
 }
 
 void	render_player(t_game *game, int x, int y)
