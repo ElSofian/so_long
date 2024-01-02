@@ -6,7 +6,7 @@
 /*   By: soelalou <soelalou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 08:41:23 by soelalou          #+#    #+#             */
-/*   Updated: 2023/12/30 13:50:59 by soelalou         ###   ########.fr       */
+/*   Updated: 2023/12/30 14:24:38 by soelalou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,6 @@ static int	move_ghost(t_game *game, t_ghost *ghost)
 		tmp = game->map->map[ghost->y][ghost->x - 1];
 		if (tmp == 'P')
 			return (send_message(game, false), close_window(game), 0);
-		else if (tmp == 'C')
-		{
-			
-		}
 		game->map->map[ghost->y][ghost->x - 1] = 'G';
 		game->map->map[ghost->y][ghost->x] = tmp;
 		ghost->x--;
@@ -50,10 +46,6 @@ static int	move_ghost(t_game *game, t_ghost *ghost)
 		tmp = game->map->map[ghost->y][ghost->x + 1];
 		if (tmp == 'P')
 			return (send_message(game, false), close_window(game), 0);
-		else if (tmp == 'C')
-		{
-			
-		}	
 		game->map->map[ghost->y][ghost->x + 1] = 'G';
 		game->map->map[ghost->y][ghost->x] = tmp;
 		ghost->x++;
